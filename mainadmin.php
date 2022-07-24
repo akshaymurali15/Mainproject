@@ -96,7 +96,7 @@ img {vertical-align: middle;}
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <?php include 'sidebar.php'; ?>
+  <?php include 'sample.php'; ?>
     <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -104,7 +104,8 @@ img {vertical-align: middle;}
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">BARELL OF BOOKS</h1>
+            <h1 class="m-0">ADMIN PANEL</h1>
+            <img src="image/code.svg" alt="" height="700px" width="750px">
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -119,29 +120,29 @@ img {vertical-align: middle;}
 
 <div class="mySlides fade">
   <div class="numbertext">1 / 3</div>
-  <img src="99999.jpg" style="width:100%" height=50%>
-  <div class="text">We provide most selling books</div>
+  <!-- <img src="99999.jpg" style="width:100%" height=50%>
+  <div class="text">We provide most selling books</div> -->
 </div>
 
 <div class="mySlides fade">
   <div class="numbertext">2 / 3</div>
-  <img src="889999.jpg" style="width:100%" height=50%>
-  <div class="text">Here is all types of books</div>
+  <!-- <img src="889999.jpg" style="width:100%" height=50%>
+  <div class="text">Here is all types of books</div> -->
 </div>
 
 <div class="mySlides fade">
   <div class="numbertext">3 / 3</div>
-  <img src="922681.jpg" style="width:100%" height=50%>
-  <div class="text">Explore here</div>
+  <!-- <img src="922681.jpg" style="width:100%" height=50%>
+  <div class="text">Explore here</div> -->
 </div>
 
 </div>
 <br>
 
 <div style="text-align:center">
+  <!-- <span class="dot"></span> 
   <span class="dot"></span> 
-  <span class="dot"></span> 
-  <span class="dot"></span> 
+  <span class="dot"></span>  -->
 </div>
       <!-- Main content -->
         
@@ -160,7 +161,7 @@ img {vertical-align: middle;}
       <strong>Copyright &copy; 2022 <a href="#">BARELL OF BOOKS</a>.</strong>
       
       <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 1.1.0
+        <b></b> 
       </div>
     </footer>
   </div>

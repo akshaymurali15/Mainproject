@@ -15,15 +15,31 @@ ob_start();
     function fileValidation() {
       var fileInput = document.myform.file;
       var filePath = fileInput.value;
-      var allowedExtensions = /(\.jpg|\.png|\.jpeg)$/i;
+      var allowedExtensions = /(\.pdf)$/i;
 
       if (!allowedExtensions.exec(filePath)) {
-        document.getElementById("upl").innerHTML = "**Image should be jpg,png,jpeg";
+        document.getElementById("upl").innerHTML = "**File should be pdf format";
         fileInput.value = '';
         return false;
       }
     }
   </script>
+  <style>
+    button {
+      background-color: transparent;
+      color: white;
+      padding: 15px 32px;
+
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      width: 15%;
+      margin-left: 22%;
+      margin-right: 20%;
+
+    }
+  </style>
 
 </head>
 
@@ -44,12 +60,12 @@ ob_start();
       function Validateaa() {
         var val = document.getElementById('nf').value;
 
-        if (!val.match(/^[A-Z][A-Za-z]{3,}$/)) {
-          document.getElementById("fna").innerHTML = "**Please enter your FullName";
+        if (!val.match(/^[A-Z][a-z]+\s[A-Z][a-z]+$/)) {
+          document.getElementById("fna").innerHTML = "Firstname and Surname should Start with capital Letter";
           return false;
           document.getElementById('nf').innerHTML = " ";
         }
-        document.getElementById('fna').innerHTML = " ";
+        document.getElementById('fna').innerHTML = "  ";
         return true;
       }
     </script>
@@ -58,7 +74,7 @@ ob_start();
     <div class="flex-box">
       <label>USERNAME-</label>
       <input type="text" name="un" id="nu" placeholder="USERNAME" autocomplete="off" onchange="return validate();" onclick="return funclear();" onkeyup="chckUserfun(this.value)">
-      <span id="usrnm" style="color:red"></span>
+      <span id="usrnm" style="color:white"></span>
     </div>
 
     <div class="flex-box">
@@ -130,7 +146,7 @@ ob_start();
         var val = document.getElementById('da').value;
 
         if (!val.match(/^[A-Z][a-z" "]{3,}$/)) {
-          document.getElementById('dre').innerHTML = "Start with a Capital letter & Only alphabets are allowed";
+          document.getElementById('dre').innerHTML = "Start with a Capital letter";
           document.getElementById('da').value = "";
           return false;
         }
@@ -140,46 +156,142 @@ ob_start();
     </script>
 
     <div class="flex-box">
-      <label>D.O.B-</label>
-      <input type="date" name="dob" id="bod" placeholder="D.O.B" onclick="return funclear();">
-      <span id="obd" style="color:white"></span>
+      <label for="birth_date">Date Of Birth :</label>
+      <input type="date" name="dobs" id="dob" title="Date of birth" placeholder="DD/MM/YYYY" onblur="getAge()" />
     </div>
-    <script>
-      function onChangeDOB(executionContext) {
+    <span class="error" id="lblError" style="color: white; float:right; margin-top:-50px;"></span>
 
-        var formContext = executionContext.getFormContext();
-        var birthDate = formContext.getAttribute("birthdate").getValue();
-        var today = new Date();
-        var validMinDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate(), today.getHours(), today.getMinutes());
-        var birthDateFieldControl = formContext.getControl("birthdate");
-        if (birthDate > validMinDate) {
-          birthDateFieldControl.setNotification("Minimum Age must be 18 years. Choose correct Birthdate", "BDATE");
+
+
+    <script>
+      // function ValidateDOB() {
+      //   var lblError = document.getElementById("lblError");
+
+      //   var dateString = document.getElementById("dob").value;
+      //   var regex = /(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/;
+
+      //   if (regex.test(dateString)) {
+      //     var parts = dateString.split("/");
+      //     var dtDOB = new Date(parts[1] + "/" + parts[0] + "/" + parts[2]);
+      //     var dtCurrent = new Date();
+      //     lblError.innerHTML = "Only 14+ are allowed"
+      //     if (dtCurrent.getFullYear() - dtDOB.getFullYear() < 15) {
+      //       return false;
+      //     }
+
+      //     if (dtCurrent.getFullYear() - dtDOB.getFullYear() == 15) {
+
+      //       if (dtCurrent.getMonth() < dtDOB.getMonth()) {
+      //         return false;
+      //       }
+      //       if (dtCurrent.getMonth() == dtDOB.getMonth()) {
+
+      //         if (dtCurrent.getDate() < dtDOB.getDate()) {
+      //           return false;
+      //         }
+      //       }
+      //     }
+      //     lblError.innerHTML = " ";
+      //     return true;
+      //   } else {
+      //     //lblError.innerHTML = "Enter date in DD/MM/YYYY format ONLY."
+      //    // return false;
+      //   }
+      // }
+        function getAge() {
+
+        var dateString=document.myform.dobs.value;
+
+        //var dateString = document.getElementById("date").value;
+
+        if(dateString !="")
+
+        {
+
+            var today = new Date();
+
+            var birthDate = new Date(dateString);
+
+            var age = today.getFullYear() - birthDate.getFullYear();
+
+            var m = today.getMonth() - birthDate.getMonth();
+
+            var da = today.getDate() - birthDate.getDate();
+
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+
+                age--;
+
+            }
+
+            if(m<0){
+
+                m +=12;
+
+            }
+
+            if(da<0){
+
+                da +=30;
+
+            }
+
+          
+
+          if(age < 14 || age > 100)
+
+        {
+          lblError.innerHTML = "Only 14+ are allowed"
+          if (dtCurrent.getFullYear() - dtDOB.getFullYear() < 15) {
+            return false;
+          }
+          
+
+        // alert("Age "+age+" is restrict Allowed only for more than 14 years old");
+
+        document.myForm.dobs.value='';
+
+
+
         } else {
-          birthDateFieldControl.clearNotification("BDATE");
+
+
+          lblError.innerHTML = " ";
+          return true;
+        // alert("Age "+age+" is allowed");
+
         }
-      };
+
+        } else {
+
+        //alert("please provide your date of birth");
+
+        }
+
+        }
     </script>
+
     <div class="flex-box">
       <label>AADHAR.NO-</label>
       <input type="text" name="an" id="na" placeholder="AADHAR.NO" minlength="12" maxlength="12" onchange="Validateaaa();">
       <span id="dha" style="color:white"></span>
     </div>
     <script>
-      // function Validateaaa()
-      // {
-      //     var val = document.getElementById('na').value;
+      function Validateaaa()
+      {
+          var val = document.getElementById('na').value;
 
-      //     if (!val.match(/^[0-9]{12}/))
-      //     {
-      //         document.getElementById('dha').innerHTML="Only Numbers are allowed and must contain 12 number";
+          if (!val.match(/^[0-9]{12}/))
+          {
+              document.getElementById('dha').innerHTML="Only Numbers are allowed and must contain 12 number";
 
 
-      //            document.getElementById('na').value = "";
-      //         return false;
-      //     }
-      // document.getElementById('dha').innerHTML=" ";
-      //     return true;
-      // }
+                 document.getElementById('na').value = "";
+              return false;
+          }
+      document.getElementById('dha').innerHTML=" ";
+          return true;
+      }
     </script>
     <div class="flex-box">
       <label>AADHAR UPLOAD-</label>
@@ -187,8 +299,15 @@ ob_start();
       <span id="upl" style="color:white"></span>
     </div>
 
+    <!-- <div class="sub">
+      <button class="button">
+        <h3><u><a href="https://rzp.io/l/MQPJBZhM">Payment</u></h3>
+        </a></button>
+    </div> -->
+    <br>
+
     <div class="sub">
-      <input type="submit" name="submit" value="REGISTER">
+      <input type="submit" name="submit" value="REGISTER" onsubmit="return ValidateDOB()">
     </div>
     </div>
 
@@ -198,9 +317,9 @@ ob_start();
 
       <ul>
         <li><a href="main.php">HOME</a></li>
-        <li><a href="about.php">ABOUTUS</a></li>
+        <li><a href="about.php">ABOUT US</a></li>
 
-        <li><a href="">CONTACT</a></li>
+        <li><a href="contact.php">CONTACT</a></li>
 
         <li><a href="LOGIN.php">LOGIN</a></li>
       </ul>
@@ -240,7 +359,7 @@ if (isset($_POST['submit'])) {
 
 
   }
-  header("location:LOGIN.php");
+  header("location:verifymail.php?eml=$eml");
   ob_end_flush();
 }
 
@@ -252,10 +371,10 @@ if (isset($_POST['submit'])) {
       return false;
     }
 
-    if (!document.myform.fn.value.match(/^[A-Z][a-z" "]{3,}$/)) {
-      document.getElementById("fna").innerHTML = "**Keep First Letter Capital";
-      return false;
-    }
+    // if (!document.myform.fn.value.match(/^[A-Z][a-z" "]{3,}$/)) {
+    //   document.getElementById("fna").innerHTML = "**Keep First Letter Capital";
+    //   return false;
+    // }
     if (document.myform.un.value.trim() == "") {
       document.getElementById("usrnm").innerHTML = "**Please enter your UserName";
       return false;

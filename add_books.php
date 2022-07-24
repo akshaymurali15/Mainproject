@@ -10,18 +10,37 @@ include 'db.php';
     $pric=$_POST['exampleInputPhone1'];
     $stry=$_POST['exampleInputPlace1'];
     $cate=$_POST['exampleInputPassword1'];
+    $isb=$_POST['exampleInputPlace3'];
+    $publ=$_POST['exampleInputPlace4'];
+    $pg=$_POST['exampleInputPhone6'];
 
     $fileName=$_FILES["file"]["name"];
-    $targetDir="bookimages/";
-    $targetFilePath = $targetDir . $fileName; 
-    move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath);
+    $dup = mysqli_query($conn,"SELECT * FROM books WHERE Book_name = '$name'");
+    // $rult = mysqli_query($conn,$dup);
+    // $nms = mysqli_num_rows($rult);
+    if(mysqli_num_rows($dup)>0){
+    
+      echo "<script>alert('Book already exist');</script>";
 
-    // mysqli_query($conn, "INSERT INTO `books`( `Book_name`, `Type_id`, `Price`, `description`, `Image`, `Status`, `Author_name`) VALUES ('$name','$cate','$pric','$stry','$fileName','YES','$auth')");
-    mysqli_query($conn,"INSERT INTO `books`(`Book_name`, `Type_id`, `Edition`, `Price`, `description`, `Image`, `Status`, `Author_name`) VALUES ('$name','$cate','$ed','$pric','$stry','$fileName','YES','$auth')");
-        echo "<script>alert('Added');</script>";
-        // echo "<script>window.history.back();</script>";
+ }else{
+  
+  $targetDir="bookimages/";
+  $targetFilePath = $targetDir . $fileName; 
+  move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath);
+
+  // mysqli_query($conn, "INSERT INTO `books`( `Book_name`, `Type_id`, `Price`, `description`, `Image`, `Status`, `Author_name`) VALUES ('$name','$cate','$pric','$stry','$fileName','YES','$auth')");
+  mysqli_query($conn,"INSERT INTO `books`(`Book_name`, `Type_id`, `Edition`, `Price`, `description`, `Image`, `Status`, `Author_name`,`ISBN_no`,`Publisher`,`Pages`) VALUES ('$name','$cate','$ed','$pric','$stry','$fileName','YES','$auth','$isb','$publ','$pg')");
+
+  $bid_Select=mysqli_query($conn,"SELECT Book_id FROM books ORDER BY Book_id DESC LIMIT 1");
+  $select_res=mysqli_fetch_array($bid_Select);
+  $book=$select_res['Book_id'];
+  $stck=0;
+  $stock_insert=mysqli_query($conn,"INSERT INTO `tbl_stock`(`Book_id`,`stock`) VALUES ('$book','$stck')");
+  
+      echo "<script>alert('Added');</script>";
+      // echo "<script>window.history.back();</script>";
  }
-
+ }
 
 ?>
 <!DOCTYPE html>
@@ -33,6 +52,11 @@ include 'db.php';
   <link rel="stylesheet" type="text/css" href="adminlte.css?v=<?php echo time(); ?>">
 
   <?php include 'db.php'; ?>
+  <style>
+    .form-group a{
+      float:right;
+    }
+  </style>
 </head>
 <!--
 `body` tag options:
@@ -50,7 +74,7 @@ include 'db.php';
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <?php include 'sidebar.php'; ?>
+  <?php include 'sample.php'; ?>
     <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -85,22 +109,7 @@ include 'db.php';
     <form method="post" enctype="multipart/form-data">
                 <div class="card-body">
                 <div class="form-group">
-                    <label for="exampleInputName1">Book Name</label>
-                    <input type="text" class="form-control" name="exampleInputName1" placeholder="Enter book name" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Edition</label>
-                    <input type="text" class="form-control" name="exampleInputedition" placeholder="Enter Edition" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Author Name</label>
-                    <input type="text" class="form-control" name="exampleInputEmail1" placeholder="Enter author name" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPhone1">Price</label>
-                    <input type="number" class="form-control" name="exampleInputPhone1" placeholder="Enter price" required>
-                  </div>
-                  <div class="form-group">
+                  <a href="add_ct.php">+Add new</a>
                     <label for="exampleInputPassword1">Category</label>
                     <select class="form-control" name="exampleInputPassword1" required>
                     <option value="select">select</option>
@@ -113,9 +122,54 @@ include 'db.php';
                     </select>
                     
                   </div>
+                <div class="form-group">
+                    <label for="exampleInputName1">Book Name</label>
+                    <input type="text" class="form-control" name="exampleInputName1" placeholder="Enter book name" required>
+                  </div>
                   <div class="form-group">
-                    <label for="exampleInputPlace1">Story</label>
+                    <label for="exampleInputEmail1">Edition</label>
+                    <input type="text" class="form-control" name="exampleInputedition" placeholder="Enter Edition" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Author Name</label>
+                    <input type="text" class="form-control" name="exampleInputEmail1" placeholder="Enter author name" required>
+                  </div>
+                  <!-- <div class="form-group">
+                    <label for="exampleInputPhone1">Price</label>
+                    <input type="number" class="form-control" name="exampleInputPhone1" placeholder="Enter price" required>
+                  </div> -->
+                  <!-- <div class="form-group">
+                    <label for="exampleInputPassword1">Category</label>
+                    <select class="form-control" name="exampleInputPassword1" required>
+                    <option value="select">select</option>
+                    <?php
+                    $sq=mysqli_query($conn,"SELECT * FROM `book-type`");
+                    while($rr=mysqli_fetch_array($sq)){?>
+                      <option value="<?php echo $rr['Type_id']; ?>"><?php echo $rr['Type_name']; ?></option>
+                    <?php }
+                    ?>
+                    </select>
+                    
+                  </div> -->
+                  <div class="form-group">
+                    <label for="exampleInputPlace1">ISBN No.</label>
+                    <input type="text" class="form-control" name="exampleInputPlace3" placeholder="Enter ISBN NO.">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPlace1">Publisher</label>
+                    <input type="text" class="form-control" name="exampleInputPlace4" placeholder="Enter Publisher" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPlace1">Story Line</label>
                     <input type="text" class="form-control" name="exampleInputPlace1" placeholder="Enter story" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPhone1">Price</label>
+                    <input type="number" class="form-control" name="exampleInputPhone1" placeholder="Enter price " required maxlength="5">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPhone1">Pages</label>
+                    <input type="number" class="form-control" name="exampleInputPhone6" placeholder="Enter price " required>
                   </div>
                   
                   <div class="form-group">

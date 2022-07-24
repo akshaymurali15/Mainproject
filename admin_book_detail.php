@@ -29,7 +29,7 @@ $result=mysqli_query($conn,"SELECT * FROM `books` where book_id='$bo_id'");
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <?php include 'sidebar.php'; ?>
+  <?php include 'sample.php'; ?>
     <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -65,8 +65,11 @@ $result=mysqli_query($conn,"SELECT * FROM `books` where book_id='$bo_id'");
                     <div id="collapseOne" class="collapse show" data-parent="#accordion">
                       <div class="card-body">
                       <img src="bookimages/<?php echo $row['Image'];?>" alt="<?php echo $row['Image'];?>" width="250" height="350" style="margin-left:400px;"><br>
-                          <h5><b>Author: </b> <?php echo $row['Author_name'];?> <br>
-                          <b>Story Line:</b><div style="margin:-23px 0 0 100px;"><?php echo $row['description'];?></div></h5>
+                          <h5><b>Author : </b> <?php echo $row['Author_name'];?> <br>
+                          <b>Story Line:</b><div style="margin:-23px 0 0 100px;"><?php echo $row['description'];?></div>
+                          <b>Publisher :</b><?php echo $row['Publisher'];?>
+                          <br><b>Pages :</b><?php echo $row['Pages'];?>
+                          <br><b>ISBN.No :</b><?php echo $row['ISBN_no'];?></h5>
                       </div>
                       <?php } ?>
                     </div>
@@ -87,9 +90,9 @@ $result=mysqli_query($conn,"SELECT * FROM `books` where book_id='$bo_id'");
     <!-- Main Footer -->
     <footer class="main-footer">
       <strong>Copyright &copy; 2022 <a href="#">BARELL OF BOOKS</a>.</strong>
-      All rights reserved.
+      
       <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 1.1.0
+        <b></b>
       </div>
     </footer>
   </div>

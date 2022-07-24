@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BRS</title>
+  <title></title>
   <link rel="stylesheet" type="text/css" href="adminlte.css?v=<?php echo time(); ?>">
   <?php include 'db.php'; ?>
 </head>
@@ -35,7 +35,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="#"></a></li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -57,7 +57,7 @@
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="dealer_view_books.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -72,7 +72,7 @@
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
-              <a href="users.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -87,7 +87,7 @@
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="dealer_orders.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -102,7 +102,7 @@
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
               </div>
-              <a href="dealer_complaints.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -124,10 +124,10 @@
 
     <!-- Main Footer -->
     <footer class="main-footer">
-      <strong>Copyright &copy; 2021 <a href="#">Book Rental</a>.</strong>
-      All rights reserved.
+      <strong>Copyright &copy; 2022 <a href="#">BARELL OF BOOKS</a>.</strong>
+      
       <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 1.1.0
+        <b></b>
       </div>
     </footer>
   </div>

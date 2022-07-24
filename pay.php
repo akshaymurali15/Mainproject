@@ -1,5 +1,6 @@
 <?php 
 include 'db.php';
+$q=$_GET['qty'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -68,10 +69,14 @@ include 'db.php';
 <?php 
 include_once 'sidebar3.php'; 
 $uid=$_SESSION['UserID'];
-$csql="SELECT SUM(Price) AS pricesum FROM cart WHERE Login_id=$uid";
+$csql="SELECT User_Order_id,total_price FROM `user-order` WHERE User_id='$uid' ORDER BY User_Order_id DESC LIMIT 1";
 $psl = mysqli_query($conn,$csql);
-$psql = mysqli_fetch_assoc($psl);
-$sum=$psql["pricesum"]
+$psql = mysqli_fetch_array($psl);
+$sum=$psql["total_price"];
+$usnme = "SELECT Name,Mobile,Address FROM user WHERE Login_id='$uid'";
+$rlt = mysqli_query($conn,$usnme);
+$fassoc = mysqli_fetch_array($rlt);
+$id= $psql['User_Order_id'];
 ?>
     <form method="post" enctype="multipart/form-data">
         <td>
@@ -83,16 +88,16 @@ $sum=$psql["pricesum"]
                 <h2>Place order</h2><br><br>
 
                 <label class="labels">Total Amount</label>
-                <input type="text" id="psw" placeholder="total price" name="psw" value="<?php echo "$sum" ?>" required autocomplete="off" class="inputs" readonly><br><br>
+                <input type="text" id="psw" placeholder="total price" name="psw" value="₹<?php echo "$sum" ?>" required autocomplete="off" class="inputs" readonly><br><br>
 
                 <label class="labels">Delivery Name</label>
-                <input type="text" id="products" placeholder="Your Name" name="email" required autocomplete="off" class="inputs"><br><br>
+                <input type="text" id="products" placeholder="Your Name" name="email" value="<?php echo $fassoc['Name']; ?>" required autocomplete="off" class="inputs"><br><br>
 
                 <label class="labels">phone</label>
-                <input type="text" id="products" placeholder="Mobile" name="email" required autocomplete="off" class="inputs"><br><br>
+                <input type="text" id="products" placeholder="Mobile" name="email" value="<?php echo $fassoc['Mobile']; ?>" required autocomplete="off" class="inputs"><br><br>
 
                 <label class="labels">Delivery Address</label>
-                <textarea placeholder="Enter your address" cols="25" rows="2" name="address" required autocomplete="off" class="inputs"></textarea><br><br><br>
+                <input type="text" placeholder="Enter your address" cols="25" rows="2" name="address" value="<?php echo $fassoc['Address']; ?>" required autocomplete="off" class="inputs"></textarea><br><br><br>
 
                 <label class="labels">Payment Method</label>
                 <select name="paymentMethod" id="payment" class="inputs">
@@ -101,8 +106,8 @@ $sum=$psql["pricesum"]
                     <option value="cod">COD</option>
                 </select><br><br>
                 <div class="obtns">
-                    <button type="button" class="cnbtn" ><a href="cart.php">Cancel</a></button>
-                    <button type="submit" class="chbtn">Check out</button><br>
+                    <button type="submit" class="cnbtn" name="canc" >Cancel</button>
+                    <a href="https://rzp.io/l/MQPJBZhM" class="chbtn">Check out</a><br>
                 </div>
             </div>
         </div>
@@ -110,3 +115,18 @@ $sum=$psql["pricesum"]
 </body>
 
 </html>
+<?php 
+if(isset($_POST['canc'])){
+    $up=mysqli_query($conn,"SELECT book_id FROM `place_order` WHERE User_Order_id=$id");
+    $upd=mysqli_fetch_array($up);
+    $bookid=$upd['book_id'];
+    $stc=mysqli_query($conn,"SELECT * FROM `tbl_stock` WHERE Book_id =$bookid");
+    $upp=mysqli_fetch_array($stc);
+    $stkid=$upp['stock'];
+    $qty = $stkid+$q;
+    $udt=mysqli_query($conn,"UPDATE `tbl_stock` SET `stock`='$qty' WHERE Book_id=$bookid");
+    echo "<script>location='cart.php'</script>";
+    // header("location:cart.php");
+
+}
+?>
